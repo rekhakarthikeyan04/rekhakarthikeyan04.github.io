@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rekha K R — Full Stack Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1F3864;
+      --navy-light: #2a4a82;
+      --accent: #3B82F6;
+      --accent-light: #EFF6FF;
+      --bg: #F8FAFC;
+      --surface: #FFFFFF;
+      --text: #1A1A2E;
+      --muted: #64748B;
+      --border: #E2E8F0;
+      --tag-bg: #EFF6FF;
+      --tag-text: #1D4ED8;
+      --green: #059669;
+      --green-bg: #ECFDF5;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 0 2rem;
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand { font-weight: 700; color: var(--navy); font-size: 1rem; letter-spacing: -0.3px; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--navy); }
+
+    /* SECTIONS */
+    section { padding: 5rem 0; }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1F3864 0%, #2a4a82 50%, #1F3864 100%);
+      display: flex; align-items: center;
+      padding-top: 60px;
+    }
+    .hero-inner {
+      max-width: 900px; margin: 0 auto; padding: 0 2rem;
+      display: flex; flex-direction: column; gap: 1.5rem;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.9);
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.8rem; font-weight: 500;
+      width: fit-content;
+    }
+    .hero-badge span { width: 7px; height: 7px; background: #34D399; border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+    .hero-name {
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+    }
+    .hero-title {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: rgba(255,255,255,0.7);
+      font-weight: 400;
+    }
+    .hero-desc {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem; }
+    .btn-primary {
+      background: #fff; color: var(--navy);
+      padding: 0.7rem 1.6rem; border-radius: 0.5rem;
+      font-weight: 600; font-size: 0.875rem;
+      text-decoration: none; transition: transform 0.15s, box-shadow 0.15s;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.4);
+      color: #fff;
+      padding: 0.7rem 1.6rem; border-radius: 0.5rem;
+      font-weight: 500; font-size: 0.875rem;
+      text-decoration: none; transition: background 0.2s;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); }
+    .hero-contacts {
+      display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.5rem;
+    }
+    .hero-contacts a {
+      color: rgba(255,255,255,0.6); font-size: 0.8rem;
+      text-decoration: none; display: flex; align-items: center; gap: 0.4rem;
+      transition: color 0.2s;
+    }
+    .hero-contacts a:hover { color: rgba(255,255,255,0.95); }
+
+    /* SECTION HEADER */
+    .section-label {
+      font-size: 0.7rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-size: 1.75rem; font-weight: 700;
+      color: var(--navy); letter-spacing: -0.5px;
+      margin-bottom: 0.5rem;
+    }
+    .section-divider {
+      width: 40px; height: 3px;
+      background: var(--accent);
+      border-radius: 2px; margin-bottom: 2.5rem;
+    }
+
+    /* ABOUT */
+    #about { background: var(--surface); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; font-size: 0.95rem; }
+    .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .stat-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .stat-number { font-size: 1.75rem; font-weight: 700; color: var(--navy); }
+    .stat-desc { font-size: 0.78rem; color: var(--muted); margin-top: 0.25rem; }
+
+    /* SKILLS */
+    #skills { background: var(--bg); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.25rem; }
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 1.25rem 1.5rem;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .skill-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .skill-card-title {
+      font-size: 0.75rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: var(--accent); margin-bottom: 0.75rem;
+    }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      background: var(--tag-bg); color: var(--tag-text);
+      font-size: 0.75rem; font-weight: 500;
+      padding: 0.25rem 0.65rem;
+      border-radius: 0.35rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .tag.green { background: var(--green-bg); color: var(--green); }
+    .tag.gray { background: #F1F5F9; color: #475569; }
+
+    /* EXPERIENCE */
+    #experience { background: var(--surface); }
+    .exp-card {
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 1.75rem;
+      background: var(--bg);
+      position: relative;
+    }
+    .exp-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .exp-company { font-size: 1.05rem; font-weight: 700; color: var(--navy); }
+    .exp-role { font-size: 0.875rem; color: var(--muted); margin-bottom: 0.25rem; }
+    .exp-date {
+      background: var(--accent-light); color: var(--accent);
+      font-size: 0.75rem; font-weight: 600;
+      padding: 0.3rem 0.8rem; border-radius: 2rem;
+      white-space: nowrap;
+    }
+    .exp-list { margin-top: 1rem; padding-left: 1.1rem; }
+    .exp-list li { font-size: 0.875rem; color: #334155; margin-bottom: 0.5rem; line-height: 1.6; }
+    .exp-list li::marker { color: var(--accent); }
+
+    /* ACHIEVEMENTS */
+    .achievement-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1.5rem; }
+    .achievement-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-left: 3px solid var(--navy);
+      border-radius: 0 0.75rem 0.75rem 0;
+      padding: 1.25rem 1.5rem;
+    }
+    .achievement-card h4 { font-size: 0.85rem; font-weight: 600; color: var(--navy); margin-bottom: 0.5rem; }
+    .achievement-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    /* PROJECTS */
+    #projects { background: var(--bg); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 0.75rem; padding: 1.5rem;
+      display: flex; flex-direction: column; gap: 0.75rem;
+      transition: box-shadow 0.2s, transform 0.15s;
+    }
+    .project-card:hover { box-shadow: 0 8px 30px rgba(31,56,100,0.1); transform: translateY(-2px); }
+    .project-icon {
+      width: 44px; height: 44px; border-radius: 0.6rem;
+      background: var(--accent-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem;
+    }
+    .project-name { font-size: 0.95rem; font-weight: 600; color: var(--navy); }
+    .project-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; flex: 1; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+    /* EDUCATION */
+    #education { background: var(--surface); }
+    .edu-card {
+      display: flex; gap: 1.5rem; align-items: flex-start;
+      padding: 1.5rem; background: var(--bg);
+      border: 1px solid var(--border); border-radius: 0.75rem; margin-bottom: 1rem;
+    }
+    .edu-icon {
+      width: 48px; height: 48px; border-radius: 0.6rem;
+      background: var(--navy); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; flex-shrink: 0;
+    }
+    .edu-degree { font-weight: 600; color: var(--navy); font-size: 0.95rem; }
+    .edu-school { font-size: 0.85rem; color: var(--muted); margin-top: 0.2rem; }
+    .edu-year { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
+    .edu-grade {
+      margin-left: auto; background: var(--green-bg);
+      color: var(--green); font-size: 0.78rem; font-weight: 600;
+      padding: 0.25rem 0.75rem; border-radius: 2rem; white-space: nowrap;
+      align-self: flex-start;
+    }
+
+    /* CONTACT */
+    #contact { background: var(--navy); }
+    #contact .section-label { color: rgba(255,255,255,0.5); }
+    #contact .section-title { color: #fff; }
+    #contact .section-divider { background: rgba(255,255,255,0.3); }
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .contact-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 0.75rem; padding: 1.25rem 1.5rem;
+      text-decoration: none; transition: background 0.2s;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .contact-card:hover { background: rgba(255,255,255,0.15); }
+    .contact-card-icon { font-size: 1.25rem; }
+    .contact-card-label { font-size: 0.72rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.8px; }
+    .contact-card-value { font-size: 0.85rem; color: #fff; font-weight: 500; margin-top: 0.15rem; }
+
+    /* FOOTER */
+    footer {
+      background: #0f1f40; color: rgba(255,255,255,0.4);
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .achievement-row { grid-template-columns: 1fr; }
+      nav { padding: 0 1rem; }
+      .nav-links { gap: 1rem; }
+      .container { padding: 0 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand">Rekha K R</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span></span> Open to full-time opportunities
+    </div>
+    <h1 class="hero-name">Rekha K R</h1>
+    <p class="hero-title">Full Stack Developer &nbsp;·&nbsp; Backend Systems &nbsp;·&nbsp; Java &amp; Spring Boot</p>
+    <p class="hero-desc">
+      Software engineer with production experience at Zoho Corporation, building high-availability backend systems for log ingestion and processing at scale.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary">View my work ↓</a>
+      <a href="#contact" class="btn-outline">Get in touch</a>
+      <a href="Rekha_KR_FullStack_Resume.pdf" class="btn-outline" download>Download résumé</a>
+    </div>
+    <div class="hero-contacts">
+      <a href="mailto:rekhakarthikeyan04@gmail.com">✉ rekhakarthikeyan04@gmail.com</a>
+      <a href="https://linkedin.com/in/rekha-k-r" target="_blank">in linkedin.com/in/rekha-k-r</a>
+      <a href="https://github.com/Rekhakarthikeyan" target="_blank">⌥ github.com/Rekhakarthikeyan</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <p class="section-label">About me</p>
+    <h2 class="section-title">Who I am</h2>
+    <div class="section-divider"></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a Software Development Engineer based in Coimbatore, Tamil Nadu, with hands-on industry experience at <strong>Zoho Corporation</strong> building production-grade backend systems that process logs at massive scale.
+        </p>
+        <p>
+          My background is in Java, MySQL, Unix/Linux and distributed file systems — and I'm actively expanding into full stack development with Spring Boot, REST APIs, and frontend technologies to build complete, end-to-end solutions.
+        </p>
+        <p>
+          I love debugging hard problems, optimizing system performance, and writing clean, maintainable code that actually ships.
+        </p>
+      </div>
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-number">1+</div>
+          <div class="stat-desc">Year industry experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">7yr</div>
+          <div class="stat-desc">Critical bug resolved</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">45TB</div>
+          <div class="stat-desc">Security incident handled</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">8.65</div>
+          <div class="stat-desc">B.E. CGPA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <p class="section-label">Technical skills</p>
+    <h2 class="section-title">What I work with</h2>
+    <div class="section-divider"></div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-title">Languages</div>
+        <div class="tag-list">
+          <span class="tag">Java</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">Bash / Shell</span>
+          <span class="tag">SQL</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Backend</div>
+        <div class="tag-list">
+          <span class="tag green">Spring Boot</span>
+          <span class="tag green">MySQL</span>
+          <span class="tag green">REST APIs</span>
+          <span class="tag green">Distributed File Systems</span>
+          <span class="tag green">Unix / Linux</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Frontend</div>
+        <div class="tag-list">
+          <span class="tag">HTML5</span>
+          <span class="tag">CSS3</span>
+          <span class="tag">React.js</span>
+          <span class="tag">JavaScript ES6+</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">DevOps &amp; Tools</div>
+        <div class="tag-list">
+          <span class="tag gray">Git</span>
+          <span class="tag gray">GitLab</span>
+          <span class="tag gray">IntelliJ IDEA</span>
+          <span class="tag gray">VS Code</span>
+          <span class="tag gray">Eclipse</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">CS Foundations</div>
+        <div class="tag-list">
+          <span class="tag">Data Structures</span>
+          <span class="tag">Algorithms</span>
+          <span class="tag">OOP</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Performance &amp; Debug</div>
+        <div class="tag-list">
+          <span class="tag">JMH</span>
+          <span class="tag">Production Analysis</span>
+          <span class="tag">Log Debugging</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <p class="section-label">Work experience</p>
+    <h2 class="section-title">Where I've worked</h2>
+    <div class="section-divider"></div>
+    <div class="exp-card">
+      <div class="exp-header">
+        <div>
+          <div class="exp-company">Zoho Corporation Pvt Ltd</div>
+          <div class="exp-role">Member Technical Staff — Software Development Engineer, Logs Team</div>
+        </div>
+        <span class="exp-date">Apr 2025 – Feb 2026</span>
+      </div>
+      <ul class="exp-list">
+        <li>Developed and maintained backend systems for log ingestion, processing, and analysis in high-availability production environments.</li>
+        <li>Built RESTful backend modules integrating third-party JARs; collaborated via GitLab code reviews and version control practices.</li>
+        <li>Engineered a log retrieval system over a Distributed File System (DFS) with server/cluster-level feature mapping and automated ZIP packaging.</li>
+        <li>Designed rsyslog parsing pipelines for multiple production log types, improving observability and debugging efficiency.</li>
+        <li>Built log throttling and real-time user notification system to prevent production overload from burst log generation.</li>
+        <li>Performed Java performance benchmarking using JMH; resolved critical production bottlenecks through systematic analysis.</li>
+      </ul>
+    </div>
+
+    <div class="achievement-row">
+      <div class="achievement-card">
+        <h4>🐛 Resolved a 7-year-old data loss bug</h4>
+        <p>Identified a race condition in DFS thread spawning on server restart causing missed logs. Fixed with thread-state validation to prevent duplicate file reads.</p>
+      </div>
+      <div class="achievement-card">
+        <h4>🔒 Responded to a 45TB security incident</h4>
+        <p>Re-architected log retrieval with multi-server parallel thread distribution to chunk large files, dramatically improving throughput and system resilience.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <p class="section-label">Projects</p>
+    <h2 class="section-title">What I've built</h2>
+    <div class="section-divider"></div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-icon">📂</div>
+        <div class="project-name">Raw Logs Management System</div>
+        <div class="project-desc">Scalable log retrieval system using a Distributed File System. Mapped features to servers and cluster modules for accurate labeling; implemented multi-channel download with automatic ZIP packaging.</div>
+        <div class="project-tags">
+          <span class="tag">Java</span>
+          <span class="tag">DFS</span>
+          <span class="tag green">REST API</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-icon">⚙️</div>
+        <div class="project-name">Rsyslog Pipeline Parser</div>
+        <div class="project-desc">Developed parsers for rsyslog data across multiple production log types, improving structure, readability, and mean time to debug (MTTD) in production incidents.</div>
+        <div class="project-tags">
+          <span class="tag">Java</span>
+          <span class="tag gray">Unix/Linux</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-icon">🔔</div>
+        <div class="project-name">Log Throttling &amp; Alerting</div>
+        <div class="project-desc">Configurable throttling system to control burst log generation and protect resources. Built automated threshold-breach notifications to alert users before overload conditions occur.</div>
+        <div class="project-tags">
+          <span class="tag">Java</span>
+          <span class="tag green">Spring Boot</span>
+          <span class="tag">MySQL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <p class="section-label">Education</p>
+    <h2 class="section-title">Academic background</h2>
+    <div class="section-divider"></div>
+    <div class="edu-card">
+      <div class="edu-icon">BE</div>
+      <div>
+        <div class="edu-degree">B.E. — Biomedical Engineering</div>
+        <div class="edu-school">KIT — Kalaignarkarunanidhi Institute of Technology, Coimbatore</div>
+        <div class="edu-year">2021 – 2025</div>
+      </div>
+      <div class="edu-grade">CGPA 8.65</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-icon" style="font-size:0.75rem;">HSC</div>
+      <div>
+        <div class="edu-degree">Higher Secondary Certificate (HSC)</div>
+        <div class="edu-school">PSG Sarvajana Higher Secondary School, Coimbatore</div>
+        <div class="edu-year">2020 – 2021</div>
+      </div>
+      <div class="edu-grade">88.5%</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <p class="section-label">Get in touch</p>
+    <h2 class="section-title">Let's connect</h2>
+    <div class="section-divider"></div>
+    <div class="contact-grid">
+      <a class="contact-card" href="mailto:rekhakarthikeyan04@gmail.com">
+        <span class="contact-card-icon">✉️</span>
+        <div>
+          <div class="contact-card-label">Email</div>
+          <div class="contact-card-value">rekhakarthikeyan04@gmail.com</div>
+        </div>
+      </a>
+      <a class="contact-card" href="tel:+917708090465">
+        <span class="contact-card-icon">📞</span>
+        <div>
+          <div class="contact-card-label">Phone</div>
+          <div class="contact-card-value">+91 7708090465</div>
+        </div>
+      </a>
+      <a class="contact-card" href="https://linkedin.com/in/rekha-k-r" target="_blank">
+        <span class="contact-card-icon">💼</span>
+        <div>
+          <div class="contact-card-label">LinkedIn</div>
+          <div class="contact-card-value">linkedin.com/in/rekha-k-r</div>
+        </div>
+      </a>
+      <a class="contact-card" href="https://github.com/Rekhakarthikeyan" target="_blank">
+        <span class="contact-card-icon">⌥</span>
+        <div>
+          <div class="contact-card-label">GitHub</div>
+          <div class="contact-card-value">github.com/Rekhakarthikeyan</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Built by Rekha K R &nbsp;·&nbsp; Coimbatore, Tamil Nadu &nbsp;·&nbsp; 2025
+</footer>
+
+</body>
+</html>
